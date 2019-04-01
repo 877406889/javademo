@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.UUID;
 
 import static com.mmall.common.TokenCache.TOKEN_PREFIX;
@@ -154,6 +155,12 @@ public class UserServicelmpl implements IUserService {
         }
         return ServerResponse.createByErrorMessage("密码更新失败");
     }
+
+    /**
+     * 用户修改自己信息
+     * @param user
+     * @return
+     */
     public ServerResponse<User> updateInformation(User user){
         //username是不能被更新的
         //email也要进行一个校验，校验新的email是不是已经存在，并且存在的email如果相同的画，不能是我们当前的这个用户的。
@@ -173,5 +180,19 @@ public class UserServicelmpl implements IUserService {
             return ServerResponse.createBySuccess("更新个人信息成功",updateUser);
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
+    }
+
+    /**
+     * 查询用户的详细信息
+     * @param userId
+     * @return
+     */
+    public ServerResponse<User> getInformation(Integer userId){
+        User user=userMapper.selectByPrimaryKey(userId);
+        if(user==null){
+            return ServerResponse.createByErrorMessage("找不到当前用户");
+        }
+        user.setPassword(StringUtils.EMPTY);
+        return ServerResponse.createBySuccess(user);
     }
 }
