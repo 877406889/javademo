@@ -11,10 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.UUID;
-
-import static com.mmall.common.TokenCache.TOKEN_PREFIX;
 
 @Service("iUserService")
 public class UserServicelmpl implements IUserService {
@@ -26,7 +23,7 @@ public class UserServicelmpl implements IUserService {
      */
     @Override
     public ServerResponse<User> login(String username, String password) {
-        int resultCount=userMapper.chechUsername(username);
+        int resultCount=userMapper.checkUsername(username);
         if(resultCount==0){
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
@@ -67,11 +64,13 @@ public class UserServicelmpl implements IUserService {
         if(org.apache.commons.lang3.StringUtils.isNotBlank(type)){
             //开始校验
                 if(Const.USERNAME.equals(type)) {
-                    int resultCount=userMapper.chechUsername(str);
-                    return ServerResponse.createByErrorMessage("用户名已存在");
+                    int resultCount=userMapper.checkUsername(str);
+                    if(resultCount>0) {
+                        return ServerResponse.createByErrorMessage("用户名已存在");
+                    }
                 }
                 if (Const.EMAIL.equals(type)){
-                    int resultCount=userMapper.chechEmail(str);
+                    int resultCount=userMapper.checkEmail(str);
                     if(resultCount>0){
                         return ServerResponse.createByErrorMessage("email已存在");
                     }
@@ -117,7 +116,7 @@ public class UserServicelmpl implements IUserService {
      * @param forgetToken 用户输入的token
      * @return
      */
-    public ServerResponse<String> forgetRestPassword(String username,String PasswordNew,String forgetToken){
+    public ServerResponse<String> forgetResetPassword(String username,String PasswordNew,String forgetToken){
         if(org.apache.commons.lang3.StringUtils.isBlank(forgetToken)){
             return  ServerResponse.createByErrorMessage("参数错误，token需要传递");
         }
@@ -127,14 +126,14 @@ public class UserServicelmpl implements IUserService {
             return ServerResponse.createByErrorMessage("用户不存在");
         }
         String token=TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
-        if(StringUtils.isBlank(token)){
+        if(org.apache.commons.lang3.StringUtils.isBlank(token)){
             return ServerResponse.createByErrorMessage("token无效或者过期");
         }
-        if(StringUtils.equals(forgetToken,token)){
+        if(org.apache.commons.lang3.StringUtils.equals(forgetToken,token)){
             String md5Password= MD5Util.MD5EncodeUtf8(PasswordNew);
-            int rowcount=userMapper.updatePasswordByUsername(username,md5Password);
+            int rowCount=userMapper.updatePasswordByUsername(username,md5Password);
 
-            if(rowcount>0){
+            if(rowCount>0){
                 return ServerResponse.createBySuccessMessage("修改密码成功");
             }
         }else{
@@ -194,5 +193,18 @@ public class UserServicelmpl implements IUserService {
         }
         user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
+    }
+    //backend
+
+    /**
+     * 校验是否为管理员
+     * @param user
+     * @return
+     */
+    public ServerResponse checkAdminRole(User user){
+        if(user!=null&&user.getRole().intValue()==Const.Role.ROLE_ADMIN){
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
     }
 }

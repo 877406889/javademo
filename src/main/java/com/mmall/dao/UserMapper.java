@@ -16,19 +16,19 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    int chechUsername(String username);
+    int checkUsername(String username);
 
-    int chechEmail(String email);
+    int checkEmail(String email);
 
-    User selectLogin(@Param("username") String username,@Param("password") String password);
+    User selectLogin(@Param("username") String username, @Param("password") String password);
 
     String selectQuestionByUsername(String username);
 
-    int checkAnswer(@Param("username") String username,@Param("question") String question,@Param("answer") String answer);
+    int checkAnswer(@Param("username") String username, @Param("question") String question, @Param("answer") String answer);
 
-    int updatePasswordByUsername(@Param("username") String username,@Param("password") String passwordNew);
+    int updatePasswordByUsername(@Param("username") String username, @Param("passwordNew") String passwordNew);
 
-    int checkPassword(@Param("password") String password,@Param("userId") Integer userId);
+    int checkPassword(@Param(value = "password") String password, @Param("userId") Integer userId);
 
-    int checkEmailByUserId(String email,Integer userId);
+    int checkEmailByUserId(@Param("email") String email, @Param("userId") Integer userId);
 }

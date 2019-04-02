@@ -50,7 +50,6 @@ public class UserController {
     @RequestMapping(value = "register.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> register(User user){
-
         return iUserService.register(user);
     }
     //校验邮箱或者用户名
@@ -82,7 +81,7 @@ public class UserController {
     @RequestMapping(value = "forget_reset_password.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetRestPassword(String username,String PasswordNew,String forgetToken){
-        return iUserService.forgetRestPassword(username, PasswordNew,forgetToken);
+        return iUserService.forgetResetPassword(username, PasswordNew,forgetToken);
     }
     @RequestMapping(value = "reset_password.do",method = RequestMethod.POST)
     @ResponseBody

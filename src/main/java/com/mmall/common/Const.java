@@ -1,7 +1,7 @@
 package com.mmall.common;
 
 public class Const {
-
+    //用来在session上绑定（currentUser，user）user为当前登录的对象
     public static final String CURRENT_USER="currentUser";
 
     public static final String EMAIL="email";
