@@ -1,4 +1,5 @@
 package com.mmall.service;
 
-public interface iFileService {
+public interface IFileService {
+
 }
