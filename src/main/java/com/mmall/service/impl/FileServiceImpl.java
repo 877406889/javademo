@@ -1,17 +1,20 @@
 package com.mmall.service.impl;
 
+import com.google.common.collect.Lists;
 import com.mmall.service.IFileService;
+import com.mmall.util.FTPUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
-
+@Service("iFileService")
 public class FileServiceImpl implements IFileService {
     private Logger logger= LoggerFactory.getLogger(FileServiceImpl.class);
-    /**
+     /**
      * 将上传的文件名返回
      * @return
      */
@@ -31,16 +34,15 @@ public class FileServiceImpl implements IFileService {
             fileDir.setWritable(true);
             fileDir.mkdir();
         }
-        //将文件上传到指定文件
+        //将文件上传到指定文件夹
         File targetFile=new File(path,uploadFileName);
         try {
-            file.transferTo(targetFile);
             //文件上传成功
-
-            //todo 将targetFile上传到我们的FTP服务器上
-
-            //todo 上传完之后，删除upload下面的文件
-
+            file.transferTo(targetFile);
+            //上传到ftp服务器上
+            FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+            //删除upload下面的文件
+            targetFile.delete();
 
         } catch (IOException e) {
             logger.error("上传文件异常",e);
@@ -49,10 +51,5 @@ public class FileServiceImpl implements IFileService {
 
         return targetFile.getName();
     }
-//    //测试
-//    public static void main(String [] arg){
-//        String fileName="abc.jpg";
-//        System.out.println(fileName.substring(fileName.lastIndexOf(".")+1));
-//    }
 
 }

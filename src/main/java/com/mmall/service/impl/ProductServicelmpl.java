@@ -1,6 +1,5 @@
 package com.mmall.service.impl;
 
-import ch.qos.logback.classic.gaffer.PropertyUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Properties;
 
 @Service("iProductService")
 public class ProductServicelmpl implements IProductService {
