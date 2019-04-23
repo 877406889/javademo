@@ -5,8 +5,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
 
-import static com.sun.xml.internal.ws.api.message.Packet.State.ServerResponse;
-
 /**
  * java bean 其中这个泛型为User时这个bean同样可以拥有User这个bean的属性
  * @param <T> 泛型可以为任何类型
