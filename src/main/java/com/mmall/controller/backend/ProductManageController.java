@@ -128,7 +128,7 @@ public class ProductManageController {
     }
 
     /**
-     * 文件上传
+     * 图片文件上传
      * @param file
      * @param request 通过上下文动态创建路径
      * @return
