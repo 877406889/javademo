@@ -26,7 +26,8 @@ public class ProductController {
     public ServerResponse<ProductDetailVo> detail(Integer productId){
         return iProductService.getproductDetail(productId);
     }
-
+    @RequestMapping("list.do")
+    @ResponseBody
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword",required = false)String keyword,
                                          @RequestParam(value = "categoryId",required = false) Integer categoryId,
                                          @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,

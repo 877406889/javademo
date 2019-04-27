@@ -55,7 +55,9 @@ public class ProductServicelmpl implements IProductService {
         }
         return ServerResponse.createByErrorMessage("新增或更新产品参数不正确");
     }
-
+    /*
+    设置销售状态
+     */
     public ServerResponse<String> setSaleStatus(Integer productId,Integer status){
         if (productId==null||status==null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -69,7 +71,9 @@ public class ProductServicelmpl implements IProductService {
         }
         return ServerResponse.createByErrorMessage("修改产品销售状态失败");
     }
-
+    /*
+    用来转换成另一个vo来获取自己需要的信息而不是全部获取
+     */
     public  ServerResponse<ProductDetailVo> manageProductDetail(Integer productId){
         if (productId==null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -124,11 +128,13 @@ public class ProductServicelmpl implements IProductService {
             ProductListVo productListVo=assembleProductListVo(productItem);
             productListVoList.add(productListVo);
         }
-        PageInfo pageResult=new PageInfo(productList);
+        PageInfo pageResult=new PageInfo(productListVoList);
         pageResult.setList(productListVoList);
         return ServerResponse.createBySuccess(pageResult);
     }
-
+    /*
+    用来转换
+     */
     private ProductListVo assembleProductListVo(Product product){
         ProductListVo productListVo=new ProductListVo();
         productListVo.setId(product.getId());
@@ -196,7 +202,7 @@ public class ProductServicelmpl implements IProductService {
                 PageInfo pageInfo=new PageInfo(productDetailVoList);
                 return ServerResponse.createBySuccess(pageInfo);
             }
-            categoryIdList= iCategoryService.selectCategoryAndChildrenById(categoryId).getData();
+            categoryIdList= iCategoryService.selectCategoryAndChildrenById(category.getId()).getData();
         }
         if(StringUtils.isNotBlank(keyword)){
             keyword=new StringBuilder().append("%").append(keyword).append("%").toString();
@@ -206,7 +212,7 @@ public class ProductServicelmpl implements IProductService {
         if(StringUtils.isNotBlank(orderBy)){
             if (Const.ProductListOrderBy.PRICE_ASC_DESC.contains(orderBy)){
                 String [] orderByArray=orderBy.split("_");
-                PageHelper.orderBy(orderByArray[0]+""+orderByArray[1]);
+                PageHelper.orderBy(orderByArray[0]+" "+orderByArray[1]);
             }
         }
         List<Product> productList=productMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword)?null:keyword,categoryIdList.size()==0?null:categoryIdList);
