@@ -4,19 +4,27 @@ import java.math.BigDecimal;
 
 public class CartProductVo {
     //结合了产品和购物车的一个抽象对象
-    private Integer id;
-    private Integer userId;
-    private Integer productId;
+    private Integer id;//用户购物车中某一件商品id
+    private Integer userId;//用户id
+    private Integer productId;//产品id
     private Integer quantity;//购物车中商品数量
-    private String productName;
-    private String productSubtitle;
-    private String productMainImage;
-    private BigDecimal productPrice;
-    private Integer productStock;
+    private String productName;//产品名称
+    private String productSubtitle;//产品主题
+    private String productMainImage;//主图
+    private BigDecimal productPrice;//价格
+    private BigDecimal productTotalPrice;//购物车中某一项产品总价格=价格*数量
+    private Integer productStock;//货物的库存
     private Integer productChecked;//此商品是否勾选
-    private Integer productStatus;
-
+    private Integer productStatus;//状态
     private String limitQuantity;//限制数量的一个返回结果
+
+    public BigDecimal getProductTotalPrice() {
+        return productTotalPrice;
+    }
+
+    public void setProductTotalPrice(BigDecimal productTotalPrice) {
+        this.productTotalPrice = productTotalPrice;
+    }
 
     public Integer getProductStatus() {
         return productStatus;
