@@ -2,19 +2,24 @@ package com.mmall.vo;
 
 import java.math.BigDecimal;
 
+/**
+ * Created by L_earn
+ */
 public class ProductDetailVo {
-    private Integer id;
+
+    private Integer  id;
     private Integer categoryId;
-    private String  name;
-    private String  subtitle;
-    private String  mainImage;
-    private String  subImages;
-    private String  detail;
+    private String name;
+    private String subtitle;
+    private String mainImage;
+    private String subImages;
+    private String detail;
     private BigDecimal price;
     private Integer stock;
     private Integer status;
     private String createTime;
     private String updateTime;
+
 
     private String imageHost;
     private Integer parentCategoryId;

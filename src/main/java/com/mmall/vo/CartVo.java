@@ -3,10 +3,14 @@ package com.mmall.vo;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Created by L_earn
+ */
 public class CartVo {
-    List<CartProductVo> cartProductVoList;
+
+    private List<CartProductVo> cartProductVoList;
     private BigDecimal cartTotalPrice;
-    private boolean allChecked;//是否已经都勾选
+    private Boolean allChecked;//是否已经都勾选
     private String imageHost;
 
     public List<CartProductVo> getCartProductVoList() {
@@ -25,11 +29,11 @@ public class CartVo {
         this.cartTotalPrice = cartTotalPrice;
     }
 
-    public boolean isAllChecked() {
+    public Boolean getAllChecked() {
         return allChecked;
     }
 
-    public void setAllChecked(boolean allChecked) {
+    public void setAllChecked(Boolean allChecked) {
         this.allChecked = allChecked;
     }
 
